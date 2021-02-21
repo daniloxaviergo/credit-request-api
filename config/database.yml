@@ -1,11 +1,11 @@
 default: &default
   adapter: postgresql
-  host: 192.168.0.18
+  host: <%= ENV['DATABASE_HOST'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
   encoding: unicode
   database: <%= ENV['DATABASE_NAME'] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("DATABASE_POOL") { 5 } %>
 
 development:
   <<: *default

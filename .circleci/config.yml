@@ -4,6 +4,11 @@ jobs:
     shell: /bin/bash --login
     docker:
       - image: circleci/ruby:2.5
+      - image: circleci/postgres:11-alpine
+    environment:
+      RAILS_ENV: test
+      RACK_ENV: test
+      DATABASE_URL: postgres://postgres:@localhost:5432/credit_request_test
     steps:
       - checkout
       - run: echo -e "export RAILS_ENV=test\nexport RACK_ENV=test" >> $BASH_ENV
@@ -13,6 +18,7 @@ jobs:
             gem update --system
             gem install bundler
       - run: bundle install
+      - run: bundle exec rake db:create db:schema:load --trace
       - run:
           name: Running rubocop
           command: bundle exec rubocop
