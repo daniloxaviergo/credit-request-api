@@ -1,0 +1,27 @@
+default: &default
+  adapter: postgresql
+  host: 192.168.0.18
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  encoding: unicode
+  database: <%= ENV['DATABASE_NAME'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  min_messages: warning
+  database: credit_request_dev
+  url: <%= ENV['DATABASE_URL'] %>
+
+test:
+  <<: *default
+  min_messages: warning
+  database: credit_request_test
+  url: <%= ENV['DATABASE_URL'] %>
+
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  pool: <%= ENV['DATABASE_POOL'] %>
